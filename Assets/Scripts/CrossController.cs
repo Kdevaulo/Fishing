@@ -1,14 +1,12 @@
-using Unity.VisualScripting;
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Kdevaulo.Fishing
 {
-    internal sealed class CrossController : BaseController<CrossView>, IInitializable
+    internal sealed class CrossController : BaseController<CrossView>, IInitializable, IUpdatable
     {
         private readonly CrossSettings _crossSettings;
-        private readonly UnityFunctionsProvider _functionsProvider;
+        private readonly FunctionsProvider _functionsProvider;
 
         private readonly float _maxAngle;
         private readonly float _minAngle;
@@ -16,7 +14,10 @@ namespace Kdevaulo.Fishing
 
         private Vector2 _startPoint;
 
-        public CrossController(CrossView view, CrossSettings crossSettings, UnityFunctionsProvider functionsProvider) :
+        private float _targetAngle;
+        private float _currentAngle;
+
+        public CrossController(CrossView view, CrossSettings crossSettings, FunctionsProvider functionsProvider) :
             base(view)
         {
             _crossSettings = crossSettings;
@@ -35,9 +36,15 @@ namespace Kdevaulo.Fishing
             Subscribe();
         }
 
-        private void HandleMovement(InputAction.CallbackContext obj)
+        void IUpdatable.Update()
         {
-            var mousePosition = _functionsProvider.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            _currentAngle = GetSmoothedAngle(_targetAngle);
+
+            View.SetRotation(_currentAngle);
+        }
+
+        private float CalculateAngle(Vector2 mousePosition)
+        {
             var vectorToMouse = mousePosition - _startPoint;
 
             float a = _screenHalfVerticalHeight + _startPoint.magnitude;
@@ -50,9 +57,19 @@ namespace Kdevaulo.Fishing
             float angleMultiplier = mousePosition.x < 0 ? 1 : -1;
             float angle = Mathf.Acos(cos) * Mathf.Rad2Deg * angleMultiplier;
 
-            float targetAngle = Mathf.Clamp(angle, _minAngle, _maxAngle);
+            return Mathf.Clamp(angle, _minAngle, _maxAngle);
+        }
 
-            View.SetRotation(targetAngle);
+        private float GetSmoothedAngle(float angle)
+        {
+            return _functionsProvider.ExpDecay(_currentAngle, angle, 10, Time.deltaTime);
+        }
+
+        private void HandleMovement(InputAction.CallbackContext obj)
+        {
+            var mousePosition = _functionsProvider.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+            _targetAngle = CalculateAngle(mousePosition);
         }
 
         private void Subscribe()
