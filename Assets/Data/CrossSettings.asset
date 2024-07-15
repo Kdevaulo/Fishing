@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MinAngle>k__BackingField: -60
   <MaxAngle>k__BackingField: 60
+  <SmoothMovementDecay>k__BackingField: 10.17
   <StartPoint>k__BackingField: {x: 0, y: -2}
   <CrossMoveActionName>k__BackingField: player/look
+  <CrossPressActionName>k__BackingField: player/fire
