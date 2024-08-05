@@ -1,6 +1,4 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kdevaulo.Fishing.CrossBehaviour
 {
@@ -10,28 +8,17 @@ namespace Kdevaulo.Fishing.CrossBehaviour
         [SerializeField] private Transform _rotator;
         [SerializeField] private Transform _mover;
 
-        [SerializeField] private Transform _endPositionHolder;
-        [SerializeField] private Transform _startPositionHolder;
-
-        private Vector3 _startPosition;
-        private Vector3 _endPosition;
-
-        private void Awake()
-        {
-            _startPosition = _startPositionHolder.localPosition;
-            _endPosition = _endPositionHolder.localPosition;
-        }
+        [field: SerializeField] public Transform EndPositionHolder { get; private set; }
+        [field: SerializeField] public Transform StartPositionHolder { get; private set; }
 
         internal void SetRotation(float angleInDegrees)
         {
             _rotator.localEulerAngles = new Vector3(0, 0, angleInDegrees);
         }
 
-        internal void Move(float currentValue)
+        internal void Move(Vector2 position)
         {
-            float t = Mathf.Clamp01(currentValue);
-
-            _mover.localPosition = Vector3.Lerp(_startPosition, _endPosition, t);
+            _mover.localPosition = position;
         }
     }
 }

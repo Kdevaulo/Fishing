@@ -31,8 +31,12 @@ namespace Kdevaulo.Fishing
             _initializables = new List<IInitializable>();
 
             var functionsProvider = new FunctionsProvider(_mainCamera, _playerInput);
+            var gameplayEventsModel =
+                new GameplayEventsModel(_crossView.StartPositionHolder, _crossView.EndPositionHolder);
 
-            var crossController = new CrossController(_crossView, _crossSettings, functionsProvider);
+            var crossController =
+                new CrossController(_crossView, _crossSettings, functionsProvider, gameplayEventsModel);
+
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 

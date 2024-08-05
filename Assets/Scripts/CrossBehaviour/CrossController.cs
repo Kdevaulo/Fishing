@@ -1,13 +1,16 @@
+using System;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 namespace Kdevaulo.Fishing.CrossBehaviour
 {
-    internal sealed class CrossController : BaseController<CrossView>, IInitializable, IUpdatable
+    internal sealed class CrossController : BaseController<CrossView>, IInitializable, IUpdatable, IClearable
     {
         private readonly CrossSettings _crossSettings;
         private readonly FunctionsProvider _functionsProvider;
+        private readonly GameplayEventsModel _eventsModel;
 
         private readonly float _decay;
         private readonly float _maxAngle;
@@ -23,11 +26,12 @@ namespace Kdevaulo.Fishing.CrossBehaviour
         private bool _canMove;
         private bool _initialized;
 
-        internal CrossController(CrossView view, CrossSettings crossSettings, FunctionsProvider functionsProvider) :
-            base(view)
+        internal CrossController(CrossView view, CrossSettings crossSettings, FunctionsProvider functionsProvider,
+            GameplayEventsModel eventsModel) : base(view)
         {
             _crossSettings = crossSettings;
             _functionsProvider = functionsProvider;
+            _eventsModel = eventsModel;
 
             _minAngle = _crossSettings.MinAngle;
             _maxAngle = _crossSettings.MaxAngle;
@@ -51,7 +55,10 @@ namespace Kdevaulo.Fishing.CrossBehaviour
             if (_canMove)
             {
                 _currentValue += Time.deltaTime;
-                View.Move(_currentValue);
+                
+                var targetPosition = _eventsModel.GetPosition(_currentValue);
+                
+                View.Move(targetPosition);
             }
             else if (_initialized)
             {
@@ -59,6 +66,14 @@ namespace Kdevaulo.Fishing.CrossBehaviour
 
                 View.SetRotation(_currentAngle);
             }
+        }
+
+        void IClearable.Clear()
+        {
+            _initialized = false;
+            _canMove = false;
+
+            Unsubscribe();
         }
 
         private void Subscribe()
@@ -70,12 +85,23 @@ namespace Kdevaulo.Fishing.CrossBehaviour
             crossPressAction.canceled += HandleRelease;
         }
 
+        private void Unsubscribe()
+        {
+            _functionsProvider.FindInputAction(_crossSettings.CrossMoveActionName).performed -= HandleMovement;
+
+            var crossPressAction = _functionsProvider.FindInputAction(_crossSettings.CrossPressActionName);
+            crossPressAction.performed -= HandleHold;
+            crossPressAction.canceled -= HandleRelease;
+        }
+
         private void HandleRelease(InputAction.CallbackContext obj)
         {
             if (obj.interaction is HoldInteraction && _initialized)
             {
                 _initialized = false;
                 _canMove = false;
+
+                _eventsModel.HandleValueChosen(_currentValue);
                 Debug.Log("release");
             }
         }

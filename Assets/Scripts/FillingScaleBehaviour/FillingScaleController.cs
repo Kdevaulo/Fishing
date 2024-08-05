@@ -4,14 +4,15 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace Kdevaulo.Fishing.FillingScaleBehaviour
 {
-    internal sealed class FillingScaleController : BaseController<FillingScaleView>, IInitializable, IUpdatable
+    internal sealed class FillingScaleController : BaseController<FillingScaleView>, IInitializable, IUpdatable,
+        IClearable
     {
         private readonly FunctionsProvider _functionsProvider;
         private readonly FillingScaleSettings _scaleSettings;
 
-        private bool _canMove;
-
         private float _fillingValue;
+
+        private bool _canMove;
         private bool _isMoving;
 
         internal FillingScaleController(FillingScaleView view, FillingScaleSettings scaleSettings,
@@ -41,6 +42,14 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
             }
         }
 
+        void IClearable.Clear()
+        {
+            Unsubscribe();
+
+            _canMove = false;
+            _isMoving = false;
+        }
+
         private void HandleHold(InputAction.CallbackContext obj)
         {
             if (obj.interaction is HoldInteraction && _canMove)
@@ -64,6 +73,13 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
             var crossPressAction = _functionsProvider.FindInputAction(_scaleSettings.ScaleHoldActionName);
             crossPressAction.performed += HandleHold;
             crossPressAction.canceled += HandleRelease;
+        }
+
+        private void Unsubscribe()
+        {
+            var crossPressAction = _functionsProvider.FindInputAction(_scaleSettings.ScaleHoldActionName);
+            crossPressAction.performed -= HandleHold;
+            crossPressAction.canceled -= HandleRelease;
         }
     }
 }

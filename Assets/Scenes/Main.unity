@@ -1177,8 +1177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotator: {fileID: 1771853380}
   _mover: {fileID: 1467737217}
-  _endPositionHolder: {fileID: 757046843}
-  _startPositionHolder: {fileID: 201605993}
+  <EndPositionHolder>k__BackingField: {fileID: 757046843}
+  <StartPositionHolder>k__BackingField: {fileID: 201605993}
 --- !u!4 &1771853380
 Transform:
   m_ObjectHideFlags: 0
