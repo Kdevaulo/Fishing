@@ -25,11 +25,6 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
         void IInitializable.Initialize()
         {
             Subscribe();
-
-            View.EnableFillingPhase();
-            View.SetFillingValue(0);
-
-            _canMove = true;
         }
 
         void IUpdatable.Update()
@@ -45,9 +40,15 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
         void IClearable.Clear()
         {
             Unsubscribe();
+            Reset();
+        }
 
-            _canMove = false;
-            _isMoving = false;
+        public void HandleMovingState()
+        {
+            View.EnableFillingPhase();
+            View.SetFillingValue(0);
+
+            _canMove = true;
         }
 
         private void HandleHold(InputAction.CallbackContext obj)
@@ -63,8 +64,7 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
         {
             if (obj.interaction is HoldInteraction && _canMove)
             {
-                _canMove = false;
-                _isMoving = false;
+                Reset();
             }
         }
 
@@ -80,6 +80,12 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
             var crossPressAction = _functionsProvider.FindInputAction(_scaleSettings.ScaleHoldActionName);
             crossPressAction.performed -= HandleHold;
             crossPressAction.canceled -= HandleRelease;
+        }
+
+        private void Reset()
+        {
+            _canMove = false;
+            _isMoving = false;
         }
     }
 }

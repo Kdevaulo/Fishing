@@ -2,6 +2,7 @@
 
 using Kdevaulo.Fishing.CrossBehaviour;
 using Kdevaulo.Fishing.FillingScaleBehaviour;
+using Kdevaulo.Fishing.States;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,33 +23,37 @@ namespace Kdevaulo.Fishing
         [SerializeField] private FillingScaleView _fillingScaleView;
         [SerializeField] private FillingScaleSettings _fillingScaleSettings;
 
-        private List<IUpdatable> _updatables;
-        private List<IInitializable> _initializables;
+        private readonly List<IUpdatable> _updatables = new List<IUpdatable>();
+        private readonly List<IClearable> _clearables = new List<IClearable>();
+        private readonly List<IInitializable> _initializables = new List<IInitializable>();
 
         private void Awake()
         {
-            _updatables = new List<IUpdatable>();
-            _initializables = new List<IInitializable>();
-
             var functionsProvider = new FunctionsProvider(_mainCamera, _playerInput);
-            var gameplayEventsModel =
-                new GameplayEventsModel(_crossView.StartPositionHolder, _crossView.EndPositionHolder);
+
+            var crossPositionProvider =
+                new TransformPositionProvider(_crossView.StartPositionHolder, _crossView.EndPositionHolder);
 
             var crossController =
-                new CrossController(_crossView, _crossSettings, functionsProvider, gameplayEventsModel);
+                new CrossController(_crossView, _crossSettings, functionsProvider, crossPositionProvider);
 
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
+            var statesController = new StatesController(crossController, fillingScaleController);
+
             _updatables.Add(crossController);
             _updatables.Add(fillingScaleController);
+
             _initializables.Add(crossController);
             _initializables.Add(fillingScaleController);
+            _initializables.Add(statesController);
+            
+            _clearables.Add(statesController);
         }
 
         private void Start()
         {
-            // note: change to for loop if perfomance hit is too large
             _initializables.ForEach(x => x.Initialize());
         }
 
