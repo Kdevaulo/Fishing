@@ -19,9 +19,7 @@ namespace Kdevaulo.Fishing.States
         void IState.Select(CancellationToken token)
         {
             var targetPosition = _positionProvider.GetSavedPosition();
-            Debug.Log("saved position = " + targetPosition);
-            // todo: provide global pos
-            Debug.Log("need to provide global pos instead of local " + targetPosition);
+
         }
 
         void IClearable.Clear()

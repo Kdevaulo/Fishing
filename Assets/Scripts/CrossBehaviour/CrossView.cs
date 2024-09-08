@@ -18,7 +18,7 @@ namespace Kdevaulo.Fishing.CrossBehaviour
 
         internal void Move(Vector2 position)
         {
-            _mover.localPosition = position;
+            _mover.position = position;
         }
     }
 }

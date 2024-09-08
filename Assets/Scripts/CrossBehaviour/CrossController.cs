@@ -58,7 +58,7 @@ namespace Kdevaulo.Fishing.CrossBehaviour
             {
                 _currentValue += Time.deltaTime;
 
-                var targetPosition = _positionProvider.GetLocalPosition(_currentValue);
+                var targetPosition = _positionProvider.GetPosition(_currentValue);
 
                 View.Move(targetPosition);
             }
@@ -124,6 +124,7 @@ namespace Kdevaulo.Fishing.CrossBehaviour
         {
             if (obj.interaction is HoldInteraction && _initialized)
             {
+                _positionProvider.Initialize();
                 _canMove = true;
                 Debug.Log("hold");
             }
