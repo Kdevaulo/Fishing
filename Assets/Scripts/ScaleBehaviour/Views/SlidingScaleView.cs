@@ -10,7 +10,9 @@ namespace Kdevaulo.Fishing.ScaleBehaviour
     [AddComponentMenu(nameof(SlidingScaleView) + " in " + nameof(ScaleBehaviour))]
     internal sealed class SlidingScaleView : BaseView, IScaleView
     {
-        [SerializeField] private CanvasRenderer _renderer;
+        [SerializeField] private float _fadeDuration;
+
+        [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private GameObject _container;
         [SerializeField] private Scrollbar _slidingBar;
 

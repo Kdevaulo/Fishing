@@ -1012,14 +1012,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!222 &1182822790
-CanvasRenderer:
+--- !u!225 &1182822790
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182822785}
-  m_CullTransparentMesh: 1
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1185557667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,7 +1569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44cf87d40fc420cb6b53a523bac0113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 1182822790}
+  _fadeDuration: 1
+  _canvasGroup: {fileID: 1182822790}
   _container: {fileID: 885520015}
   _fillingImage: {fileID: 637842176}
   _stageIconHolder: {fileID: 2054584082}
@@ -1582,7 +1587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c755d31030484c9a7cc225238ea34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 1182822790}
+  _fadeDuration: 1
+  _canvasGroup: {fileID: 1182822790}
   _container: {fileID: 1701068465}
   _slidingBar: {fileID: 2137192284}
   _stageIconHolder: {fileID: 2054584082}
