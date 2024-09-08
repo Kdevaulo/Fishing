@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+
+using Cysharp.Threading.Tasks;
+
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
-namespace Kdevaulo.Fishing.FillingScaleBehaviour
+namespace Kdevaulo.Fishing.ScaleBehaviour
 {
-    internal sealed class FillingScaleController : BaseController<FillingScaleView>, IInitializable, IUpdatable,
-        IClearable
+    internal sealed class FillingScaleController : BaseController<IScaleView>, IInitializable, IUpdatable,
+        IClearable, IBehaviourController
     {
         private readonly FunctionsProvider _functionsProvider;
         private readonly FillingScaleSettings _scaleSettings;
@@ -15,7 +19,7 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
         private bool _canMove;
         private bool _isMoving;
 
-        internal FillingScaleController(FillingScaleView view, FillingScaleSettings scaleSettings,
+        internal FillingScaleController(IScaleView view, FillingScaleSettings scaleSettings,
             FunctionsProvider functionsProvider) : base(view)
         {
             _scaleSettings = scaleSettings;
@@ -32,7 +36,7 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
             if (_isMoving)
             {
                 _fillingValue += Time.deltaTime;
-                View.SetFillingValue(_fillingValue);
+                View.SetValue(_fillingValue);
                 Debug.Log(_fillingValue);
             }
         }
@@ -43,11 +47,10 @@ namespace Kdevaulo.Fishing.FillingScaleBehaviour
             Reset();
         }
 
-        public void HandleMovingState()
+        async UniTask IBehaviourController.StartAsync(CancellationToken token)
         {
-            View.EnableFillingPhase();
-            View.SetFillingValue(0);
-
+            View.SetValue(0);
+            await View.AppearAsync(token);
             _canMove = true;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Kdevaulo.Fishing.States
 {
@@ -6,7 +7,7 @@ namespace Kdevaulo.Fishing.States
     {
         public event Action StateFinished = delegate { };
 
-        void IState.Select()
+        void IState.Select(CancellationToken token)
         {
             throw new NotImplementedException();
         }

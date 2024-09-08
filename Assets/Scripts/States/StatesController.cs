@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 using Kdevaulo.Fishing.CrossBehaviour;
-using Kdevaulo.Fishing.FillingScaleBehaviour;
+using Kdevaulo.Fishing.ScaleBehaviour;
 
 namespace Kdevaulo.Fishing.States
 {
     internal class StatesController : IInitializable, IClearable
     {
+        private readonly FillingScaleController _fillingScaleController;
         private readonly CrossController _crossController;
-        private readonly FillingScaleController _scaleController;
+
+        private readonly CancellationToken _token;
 
         private IState[] _states;
 
         private int _currentStateIndex;
 
-        public StatesController(CrossController crossController, FillingScaleController scaleController)
+        public StatesController(CrossController crossController, FillingScaleController fillingScaleController,
+            CancellationToken token)
         {
             _crossController = crossController;
-            _scaleController = scaleController;
+            _fillingScaleController = fillingScaleController;
+            _token = token;
         }
 
         void IInitializable.Initialize()
         {
             _states = new IState[]
             {
-                new MovingState(_crossController, _scaleController),
+                new MovingState(_crossController, _fillingScaleController),
                 new BitingState(),
                 new SlidingState()
             };
@@ -36,7 +41,7 @@ namespace Kdevaulo.Fishing.States
             }
 
             _currentStateIndex = 0;
-            _states.First().Select();
+            _states.First().Select(_token);
         }
 
         void IClearable.Clear()
@@ -54,7 +59,7 @@ namespace Kdevaulo.Fishing.States
                 _currentStateIndex = 0;
             }
 
-            _states[_currentStateIndex].Select();
+            _states[_currentStateIndex].Select(_token);
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+
+using Cysharp.Threading.Tasks;
 
 using Kdevaulo.Fishing.CrossBehaviour;
-using Kdevaulo.Fishing.FillingScaleBehaviour;
+using Kdevaulo.Fishing.ScaleBehaviour;
 using Kdevaulo.Fishing.States;
 
 using UnityEngine;
@@ -27,8 +30,12 @@ namespace Kdevaulo.Fishing
         private readonly List<IClearable> _clearables = new List<IClearable>();
         private readonly List<IInitializable> _initializables = new List<IInitializable>();
 
+        private CancellationToken _token;
+
         private void Awake()
         {
+            _token = gameObject.GetCancellationTokenOnDestroy();
+
             var functionsProvider = new FunctionsProvider(_mainCamera, _playerInput);
 
             var crossPositionProvider =
@@ -40,7 +47,7 @@ namespace Kdevaulo.Fishing
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
-            var statesController = new StatesController(crossController, fillingScaleController);
+            var statesController = new StatesController(crossController, fillingScaleController, _token);
 
             _updatables.Add(crossController);
             _updatables.Add(fillingScaleController);
@@ -48,7 +55,7 @@ namespace Kdevaulo.Fishing
             _initializables.Add(crossController);
             _initializables.Add(fillingScaleController);
             _initializables.Add(statesController);
-            
+
             _clearables.Add(statesController);
         }
 
