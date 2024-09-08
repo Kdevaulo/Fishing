@@ -1,6 +1,4 @@
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 using Cysharp.Threading.Tasks;
 
@@ -10,33 +8,34 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace Kdevaulo.Fishing.CrossBehaviour
 {
-    internal sealed class CrossController : BaseController<CrossView>, IInitializable, IUpdatable, IClearable
+    internal sealed class CrossController : BaseController<CrossView>, IInitializable, IUpdatable, IClearable,
+        IBehaviourController
     {
-        private readonly CrossSettings _crossSettings;
-        private readonly FunctionsProvider _functionsProvider;
         private readonly TransformPositionProvider _positionProvider;
+        private readonly FunctionsProvider _functionsProvider;
+        private readonly CrossSettings _crossSettings;
 
-        private readonly float _decay;
+        private readonly float _screenHalfVerticalHeight;
         private readonly float _maxAngle;
         private readonly float _minAngle;
-        private readonly float _screenHalfVerticalHeight;
+        private readonly float _decay;
 
         private Vector2 _startPoint;
 
-        private float _targetAngle;
         private float _currentAngle;
         private float _currentValue;
+        private float _targetAngle;
 
-        private bool _canMove;
-        private bool _initialized;
         private bool _positionChosen;
+        private bool _initialized;
+        private bool _canMove;
 
         internal CrossController(CrossView view, CrossSettings crossSettings, FunctionsProvider functionsProvider,
             TransformPositionProvider positionProvider) : base(view)
         {
-            _crossSettings = crossSettings;
             _functionsProvider = functionsProvider;
             _positionProvider = positionProvider;
+            _crossSettings = crossSettings;
 
             _minAngle = _crossSettings.MinAngle;
             _maxAngle = _crossSettings.MaxAngle;
@@ -59,7 +58,7 @@ namespace Kdevaulo.Fishing.CrossBehaviour
             {
                 _currentValue += Time.deltaTime;
 
-                var targetPosition = _positionProvider.GetPosition(_currentValue);
+                var targetPosition = _positionProvider.GetLocalPosition(_currentValue);
 
                 View.Move(targetPosition);
             }
@@ -77,20 +76,21 @@ namespace Kdevaulo.Fishing.CrossBehaviour
             Unsubscribe();
         }
 
-        public async UniTask HandleMovementAsync(CancellationToken token)
+        async UniTask IBehaviourController.StartAsync(CancellationToken token)
         {
             _initialized = true;
 
             await UniTask.WaitUntil(() => _positionChosen, cancellationToken: token);
 
-            Reset();
+            _positionProvider.SavePosition(_currentValue);
         }
 
-        public Vector2 GetCurrentPosition()
+        async UniTask IBehaviourController.StopAsync(CancellationToken token)
         {
-            return _positionProvider.GetPosition(_currentValue);
+            Reset();
+            await UniTask.CompletedTask;
         }
-        
+
         private void Subscribe()
         {
             _functionsProvider.FindInputAction(_crossSettings.CrossMoveActionName).performed += HandleMovement;
@@ -116,7 +116,6 @@ namespace Kdevaulo.Fishing.CrossBehaviour
                 _initialized = false;
                 _canMove = false;
                 _positionChosen = true;
-
                 Debug.Log("release");
             }
         }
@@ -161,6 +160,7 @@ namespace Kdevaulo.Fishing.CrossBehaviour
 
         private void Reset()
         {
+            _positionChosen = false;
             _initialized = false;
             _canMove = false;
         }

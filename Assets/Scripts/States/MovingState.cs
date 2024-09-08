@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Threading;
 
-using Kdevaulo.Fishing.CrossBehaviour;
-using Kdevaulo.Fishing.ScaleBehaviour;
-
 namespace Kdevaulo.Fishing.States
 {
     internal class MovingState : IState
     {
         public event Action StateFinished = delegate { };
 
-        private readonly IBehaviourController _behaviourController;
-
-        private readonly CrossController _crossController;
+        private readonly IBehaviourController _fillingScaleController;
+        private readonly IBehaviourController _crossController;
 
         private readonly CancellationTokenSource _cts;
 
-        public MovingState(CrossController crossController, IBehaviourController controller)
+        public MovingState(IBehaviourController crossController, IBehaviourController fillingScaleController)
         {
             _crossController = crossController;
-            _behaviourController = controller;
+            _fillingScaleController = fillingScaleController;
 
             _cts = new CancellationTokenSource();
         }
 
         async void IState.Select(CancellationToken token)
         {
-            await _behaviourController.StartAsync(token);
-            await _crossController.HandleMovementAsync(token);
+            await _fillingScaleController.StartAsync(token);
+            await _crossController.StartAsync(token);
 
-            var targetPosition = _crossController.GetCurrentPosition();
-
-            // todo: provide targetPosition
+            await _crossController.StopAsync(token);
+            await _fillingScaleController.StopAsync(token);
 
             StateFinished.Invoke();
         }

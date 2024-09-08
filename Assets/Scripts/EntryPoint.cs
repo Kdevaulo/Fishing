@@ -47,7 +47,7 @@ namespace Kdevaulo.Fishing
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
-            var statesController = new StatesController(crossController, fillingScaleController, _token);
+            var statesController = new StatesController(crossPositionProvider, crossController, fillingScaleController, _token);
 
             _updatables.Add(crossController);
             _updatables.Add(fillingScaleController);

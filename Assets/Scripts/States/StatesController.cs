@@ -9,6 +9,7 @@ namespace Kdevaulo.Fishing.States
 {
     internal class StatesController : IInitializable, IClearable
     {
+        private readonly TransformPositionProvider _crossPositionProvider;
         private readonly FillingScaleController _fillingScaleController;
         private readonly CrossController _crossController;
 
@@ -18,9 +19,10 @@ namespace Kdevaulo.Fishing.States
 
         private int _currentStateIndex;
 
-        public StatesController(CrossController crossController, FillingScaleController fillingScaleController,
-            CancellationToken token)
+        public StatesController(TransformPositionProvider crossPositionProvider,
+            CrossController crossController, FillingScaleController fillingScaleController, CancellationToken token)
         {
+            _crossPositionProvider = crossPositionProvider;
             _crossController = crossController;
             _fillingScaleController = fillingScaleController;
             _token = token;
@@ -31,7 +33,7 @@ namespace Kdevaulo.Fishing.States
             _states = new IState[]
             {
                 new MovingState(_crossController, _fillingScaleController),
-                new BitingState(),
+                new BitingState(_crossPositionProvider),
                 new SlidingState()
             };
 

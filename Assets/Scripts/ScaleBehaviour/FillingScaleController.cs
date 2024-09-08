@@ -54,6 +54,12 @@ namespace Kdevaulo.Fishing.ScaleBehaviour
             _canMove = true;
         }
 
+        async UniTask IBehaviourController.StopAsync(CancellationToken token)
+        {
+            Reset();
+            await View.DisappearAsync(token);
+        }
+
         private void HandleHold(InputAction.CallbackContext obj)
         {
             if (obj.interaction is HoldInteraction && _canMove)
