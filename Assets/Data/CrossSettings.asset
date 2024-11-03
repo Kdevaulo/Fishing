@@ -16,5 +16,5 @@ MonoBehaviour:
   <MaxAngle>k__BackingField: 60
   <SmoothMovementDecay>k__BackingField: 10.17
   <StartPoint>k__BackingField: {x: 0, y: -2}
-  <CrossMoveActionName>k__BackingField: player/look
+  <CrossMoveActionName>k__BackingField: player/position
   <CrossPressActionName>k__BackingField: player/fire

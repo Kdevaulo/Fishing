@@ -15,7 +15,7 @@ namespace Kdevaulo.Fishing
     [AddComponentMenu(nameof(EntryPoint) + " in " + nameof(Fishing))]
     internal sealed class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private Camera _mainCamera;
+        [SerializeField] private Camera _camera;
         [SerializeField] private PlayerInput _playerInput;
 
         [Header("CrossBehaviour")]
@@ -36,7 +36,7 @@ namespace Kdevaulo.Fishing
         {
             _token = gameObject.GetCancellationTokenOnDestroy();
 
-            var functionsProvider = new FunctionsProvider(_mainCamera, _playerInput);
+            var functionsProvider = new FunctionsProvider(_camera, _playerInput);
 
             var crossPositionProvider =
                 new TransformPositionProvider(_crossView.StartPositionHolder, _crossView.EndPositionHolder);

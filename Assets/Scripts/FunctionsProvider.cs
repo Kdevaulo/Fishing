@@ -5,12 +5,12 @@ namespace Kdevaulo.Fishing
 {
     internal class FunctionsProvider
     {
-        private readonly Camera _mainCamera;
+        private readonly Camera _camera;
         private readonly PlayerInput _playerInput;
 
-        public FunctionsProvider(Camera mainCamera, PlayerInput playerInput)
+        public FunctionsProvider(Camera camera, PlayerInput playerInput)
         {
-            _mainCamera = mainCamera;
+            _camera = camera;
             _playerInput = playerInput;
         }
 
@@ -26,7 +26,7 @@ namespace Kdevaulo.Fishing
 
         public Vector2 ScreenToWorldPoint(Vector2 position)
         {
-            return _mainCamera.ScreenToWorldPoint(position);
+            return _camera.ScreenToWorldPoint(position);
         }
     }
 }

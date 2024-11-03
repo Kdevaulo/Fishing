@@ -132,9 +132,10 @@ namespace Kdevaulo.Fishing.CrossBehaviour
 
         private void HandleMovement(InputAction.CallbackContext obj)
         {
-            var mousePosition = _functionsProvider.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            var position = obj.ReadValue<Vector2>();
+            var targetPosition = _functionsProvider.ScreenToWorldPoint(position);
 
-            _targetAngle = CalculateAngle(mousePosition);
+            _targetAngle = CalculateAngle(targetPosition);
         }
 
         private float CalculateAngle(Vector2 mousePosition)
