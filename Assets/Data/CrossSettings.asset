@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8266d575ba74cdbbfc731da9445d247, type: 3}
   m_Name: CrossSettings
   m_EditorClassIdentifier: 
-  <MinAngle>k__BackingField: -60
-  <MaxAngle>k__BackingField: 60
+  <MinAngle>k__BackingField: -80
+  <MaxAngle>k__BackingField: 80
   <SmoothMovementDecay>k__BackingField: 10.17
   <StartPoint>k__BackingField: {x: 0, y: -2}
   <CrossMoveActionName>k__BackingField: player/position
