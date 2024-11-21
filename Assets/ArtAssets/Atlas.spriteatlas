@@ -51,13 +51,36 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 3efefd197c686564b8772fb31680d9ba, type: 3}
     - {fileID: 2800000, guid: 3e77ae4336cd5a34bb400d672a56fc2b, type: 3}
     - {fileID: 2800000, guid: a8929d9e9c29c9a4ea6fece199c8f190, type: 3}
+    - {fileID: 102900000, guid: 7e7f820e62e12714e952b64556e604bc, type: 3}
+    - {fileID: 2800000, guid: df44e37772a2b45439d5f7316aee19ed, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
-    packedSpriteRenderDataKeys: []
+    packedSpriteRenderDataKeys:
+    - 3e77ae4336cd5a34bb400d672a56fc2b: 21300000
+    - df44e37772a2b45439d5f7316aee19ed: 21300000
+    - 3efefd197c686564b8772fb31680d9ba: 21300000
+    - d246903a7437ab7438253ff985d191a2: 21300000
+    - 84d0544dfc56caa44a402ae1a4b1f4e6: 21300000
+    - f0a3372ec28f1f4418c505885d6d80d9: 21300000
+    - a8929d9e9c29c9a4ea6fece199c8f190: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3e77ae4336cd5a34bb400d672a56fc2b, type: 3}
+  - {fileID: 21300000, guid: df44e37772a2b45439d5f7316aee19ed, type: 3}
+  - {fileID: 21300000, guid: 3efefd197c686564b8772fb31680d9ba, type: 3}
+  - {fileID: 21300000, guid: d246903a7437ab7438253ff985d191a2, type: 3}
+  - {fileID: 21300000, guid: 84d0544dfc56caa44a402ae1a4b1f4e6, type: 3}
+  - {fileID: 21300000, guid: f0a3372ec28f1f4418c505885d6d80d9, type: 3}
+  - {fileID: 21300000, guid: a8929d9e9c29c9a4ea6fece199c8f190, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - RoundedBorder
+  - Cross
+  - RoundedBackground
+  - Rectangle
+  - FillingGradient
+  - CrossIcon
+  - FillingIcon
   m_RenderDataMap: {}
   m_Tag: Atlas
   m_IsVariant: 0
