@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 
 using Kdevaulo.Fishing.CrossBehaviour;
+using Kdevaulo.Fishing.FishBehaviour;
 using Kdevaulo.Fishing.ScaleBehaviour;
 using Kdevaulo.Fishing.States;
 
@@ -26,6 +27,10 @@ namespace Kdevaulo.Fishing
         [SerializeField] private FillingScaleView _fillingScaleView;
         [SerializeField] private FillingScaleSettings _fillingScaleSettings;
 
+        [Header("FishBehaviour")]
+        [SerializeField] private FishContainerView _fishContainerView;
+        [SerializeField] private FishSettings _fishSettings;
+
         private readonly List<IUpdatable> _updatables = new List<IUpdatable>();
         private readonly List<IClearable> _clearables = new List<IClearable>();
         private readonly List<IInitializable> _initializables = new List<IInitializable>();
@@ -47,7 +52,10 @@ namespace Kdevaulo.Fishing
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
-            var statesController = new StatesController(crossPositionProvider, crossController, fillingScaleController, _token);
+            var fishController = new FishController(_fishContainerView, _fishSettings);
+
+            var statesController =
+                new StatesController(crossPositionProvider, crossController, fillingScaleController, _token);
 
             _updatables.Add(crossController);
             _updatables.Add(fillingScaleController);
@@ -55,6 +63,7 @@ namespace Kdevaulo.Fishing
             _initializables.Add(crossController);
             _initializables.Add(fillingScaleController);
             _initializables.Add(statesController);
+            _initializables.Add(fishController);
 
             _clearables.Add(statesController);
         }

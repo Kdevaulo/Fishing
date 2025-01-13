@@ -19,8 +19,11 @@ namespace Kdevaulo.Fishing.States
 
         private int _currentStateIndex;
 
-        public StatesController(TransformPositionProvider crossPositionProvider,
-            CrossController crossController, FillingScaleController fillingScaleController, CancellationToken token)
+        public StatesController(
+            TransformPositionProvider crossPositionProvider,
+            CrossController crossController,
+            FillingScaleController fillingScaleController,
+            CancellationToken token)
         {
             _crossPositionProvider = crossPositionProvider;
             _crossController = crossController;
