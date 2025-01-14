@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b1c3743878441e9506791cdca4066c, type: 3}
   m_Name: FishSettings
   m_EditorClassIdentifier: 
+  <FishViewVariants>k__BackingField:
+  - {fileID: 0}
