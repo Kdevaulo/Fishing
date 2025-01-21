@@ -7,6 +7,7 @@ using Kdevaulo.Fishing.CrossBehaviour;
 using Kdevaulo.Fishing.FishBehaviour;
 using Kdevaulo.Fishing.ScaleBehaviour;
 using Kdevaulo.Fishing.States;
+using Kdevaulo.Fishing.Tools;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,6 +43,7 @@ namespace Kdevaulo.Fishing
             _token = gameObject.GetCancellationTokenOnDestroy();
 
             var functionsProvider = new FunctionsProvider(_camera, _playerInput);
+            var pool = new Pool<FishView>(_fishSettings.FishViewVariants[0], 20);
 
             var crossPositionProvider =
                 new TransformPositionProvider(_crossView.StartPositionHolder, _crossView.EndPositionHolder);
@@ -52,7 +54,7 @@ namespace Kdevaulo.Fishing
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
-            var fishController = new FishController(_fishContainerView, _fishSettings);
+            var fishController = new FishController(_fishContainerView, _fishSettings, pool);
 
             var statesController =
                 new StatesController(crossPositionProvider, crossController, fillingScaleController, _token);

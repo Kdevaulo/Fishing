@@ -6,5 +6,6 @@ namespace Kdevaulo.Fishing.FishBehaviour
     public class FishSettings : ScriptableObject
     {
         [field: SerializeField] internal FishView[] FishViewVariants { get; private set; }
+        [field: SerializeField] internal int StartCount { get; private set; }
     }
 }

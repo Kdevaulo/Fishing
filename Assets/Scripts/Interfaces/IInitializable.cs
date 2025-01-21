@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Kdevaulo.Fishing
+﻿namespace Kdevaulo.Fishing
 {
     internal interface IInitializable
     {

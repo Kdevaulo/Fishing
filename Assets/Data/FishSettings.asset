@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FishSettings
   m_EditorClassIdentifier: 
   <FishViewVariants>k__BackingField:
-  - {fileID: 0}
+  - {fileID: 8611150452221208635, guid: 6c8e4025c0c19744bbd61ee72db22d97, type: 3}
