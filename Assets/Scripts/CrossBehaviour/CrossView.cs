@@ -8,8 +8,8 @@ namespace Kdevaulo.Fishing.CrossBehaviour
         [SerializeField] private Transform _rotator;
         [SerializeField] private Transform _mover;
 
-        [field: SerializeField] public Transform EndPositionHolder { get; private set; }
-        [field: SerializeField] public Transform StartPositionHolder { get; private set; }
+        [field: SerializeField] internal Transform EndPositionHolder { get; private set; }
+        [field: SerializeField] internal Transform StartPositionHolder { get; private set; }
 
         internal void SetRotation(float angleInDegrees)
         {

@@ -4,9 +4,9 @@ using Cysharp.Threading.Tasks;
 
 namespace Kdevaulo.Fishing
 {
-    public interface IBehaviourController
+    internal interface IBehaviourController
     {
-        public UniTask StartAsync(CancellationToken token);
-        public UniTask StopAsync(CancellationToken token);
+        internal UniTask StartAsync(CancellationToken token);
+        internal UniTask StopAsync(CancellationToken token);
     }
 }

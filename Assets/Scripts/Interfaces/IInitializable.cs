@@ -2,6 +2,6 @@
 {
     internal interface IInitializable
     {
-        void Initialize();
+        internal void Initialize();
     }
 }

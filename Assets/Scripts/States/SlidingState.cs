@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Kdevaulo.Fishing.States
 {
-    public class SlidingState : IState
+    internal class SlidingState : IState
     {
         public event Action StateFinished = delegate {  };
 

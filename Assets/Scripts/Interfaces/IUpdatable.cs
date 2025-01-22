@@ -2,6 +2,6 @@
 {
     internal interface IUpdatable
     {
-        void Update();
+        internal void Update();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Kdevaulo.Fishing.States
 {
-    public class BitingState : IState
+    internal class BitingState : IState
     {
         public event Action StateFinished = delegate { };
 

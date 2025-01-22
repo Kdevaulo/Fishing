@@ -4,10 +4,10 @@ using Cysharp.Threading.Tasks;
 
 namespace Kdevaulo.Fishing
 {
-    public interface IScaleView
+    internal interface IScaleView
     {
-        public UniTask AppearAsync(CancellationToken token);
-        public UniTask DisappearAsync(CancellationToken token);
-        public void SetValue(float value);
+        internal UniTask AppearAsync(CancellationToken token);
+        internal UniTask DisappearAsync(CancellationToken token);
+        internal void SetValue(float value);
     }
 }

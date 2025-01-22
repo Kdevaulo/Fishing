@@ -19,7 +19,7 @@ namespace Kdevaulo.Fishing.States
 
         private int _currentStateIndex;
 
-        public StatesController(
+        internal StatesController(
             TransformPositionProvider crossPositionProvider,
             CrossController crossController,
             FillingScaleController fillingScaleController,

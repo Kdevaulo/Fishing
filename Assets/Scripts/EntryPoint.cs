@@ -43,7 +43,7 @@ namespace Kdevaulo.Fishing
             _token = gameObject.GetCancellationTokenOnDestroy();
 
             var functionsProvider = new FunctionsProvider(_camera, _playerInput);
-            var pool = new Pool<FishView>(_fishSettings.FishViewVariants[0], 20);
+            var pool = new Pool<FishView>(_fishSettings.FishViewVariants[0], _fishSettings.StartCount);
 
             var crossPositionProvider =
                 new TransformPositionProvider(_crossView.StartPositionHolder, _crossView.EndPositionHolder);
@@ -54,7 +54,8 @@ namespace Kdevaulo.Fishing
             var fillingScaleController =
                 new FillingScaleController(_fillingScaleView, _fillingScaleSettings, functionsProvider);
 
-            var fishController = new FishController(_fishContainerView, _fishSettings, pool);
+            var randomPointGenerator = new RandomPointGenerator();
+            var fishController = new FishController(_fishContainerView, _fishSettings, pool, randomPointGenerator);
 
             var statesController =
                 new StatesController(crossPositionProvider, crossController, fillingScaleController, _token);

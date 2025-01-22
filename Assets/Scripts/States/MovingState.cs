@@ -12,7 +12,7 @@ namespace Kdevaulo.Fishing.States
 
         private readonly CancellationTokenSource _cts;
 
-        public MovingState(IBehaviourController crossController, IBehaviourController fillingScaleController)
+        internal MovingState(IBehaviourController crossController, IBehaviourController fillingScaleController)
         {
             _crossController = crossController;
             _fillingScaleController = fillingScaleController;

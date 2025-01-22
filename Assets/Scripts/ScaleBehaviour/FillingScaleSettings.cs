@@ -4,8 +4,8 @@ namespace Kdevaulo.Fishing.ScaleBehaviour
 {
     [CreateAssetMenu(fileName = nameof(FillingScaleSettings),
         menuName = nameof(ScaleBehaviour) + "/" + nameof(FillingScaleSettings))]
-    public class FillingScaleSettings : ScriptableObject
+    internal class FillingScaleSettings : ScriptableObject
     {
-        [field: SerializeField] public string ScaleHoldActionName { get; private set; }
+        [field: SerializeField] internal string ScaleHoldActionName { get; private set; }
     }
 }

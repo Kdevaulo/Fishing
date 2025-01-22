@@ -8,23 +8,23 @@ namespace Kdevaulo.Fishing
         private readonly Camera _camera;
         private readonly PlayerInput _playerInput;
 
-        public FunctionsProvider(Camera camera, PlayerInput playerInput)
+        internal FunctionsProvider(Camera camera, PlayerInput playerInput)
         {
             _camera = camera;
             _playerInput = playerInput;
         }
 
-        public float ExpDecay(float a, float b, float decay, float deltaTimeSeconds)
+        internal float ExpDecay(float a, float b, float decay, float deltaTimeSeconds)
         {
             return b + (a - b) * Mathf.Exp(-decay * deltaTimeSeconds);
         }
 
-        public InputAction FindInputAction(string crossMoveActionName)
+        internal InputAction FindInputAction(string crossMoveActionName)
         {
             return _playerInput.actions.FindAction(crossMoveActionName, true);
         }
 
-        public Vector2 ScreenToWorldPoint(Vector2 position)
+        internal Vector2 ScreenToWorldPoint(Vector2 position)
         {
             return _camera.ScreenToWorldPoint(position);
         }

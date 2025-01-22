@@ -1,7 +1,7 @@
 ﻿namespace Kdevaulo.Fishing
 {
-    public interface IClearable
+    internal interface IClearable
     {
-        void Clear();
+        internal void Clear();
     }
 }
