@@ -26,6 +26,8 @@ namespace Kdevaulo.Fishing.FishBehaviour
 
             for (var i = 0; i < _settings.StartCount; i++)
             {
+                var data = _settings.FishDataCollection[Random.Range(0, _settings.FishDataCollection.Length)];
+
                 var poolItem = _fishPool.Get();
                 poolItem.transform.parent = View.transform;
 
@@ -33,8 +35,8 @@ namespace Kdevaulo.Fishing.FishBehaviour
                 poolItem.transform.localPosition = targetPosition;
 
                 var view = _fishPool.GetView(poolItem);
-                view.SetColor(new Color32(255, 162, 56, 176));
-                view.SetSize(0.75f);
+                view.SetColor(data.Color);
+                view.SetSize(data.Size);
             }
         }
     }

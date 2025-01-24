@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b1c3743878441e9506791cdca4066c, type: 3}
   m_Name: FishSettings
   m_EditorClassIdentifier: 
-  <FishViewVariants>k__BackingField:
-  - {fileID: 8611150452221208635, guid: 6c8e4025c0c19744bbd61ee72db22d97, type: 3}
+  <FishView>k__BackingField: {fileID: 8611150452221208635, guid: 6c8e4025c0c19744bbd61ee72db22d97, type: 3}
+  <FishDataCollection>k__BackingField:
+  - Color: {r: 0.19436097, g: 1, b: 0, a: 1}
+    Size: 0.5
+  - Color: {r: 1, g: 0.19144285, b: 0, a: 1}
+    Size: 0.3
+  - Color: {r: 1, g: 0, b: 0.8354292, a: 1}
+    Size: 0.4
+  - Color: {r: 0, g: 1, b: 0.86945343, a: 1}
+    Size: 0.4
+  - Color: {r: 0.16472125, g: 1, b: 0, a: 1}
+    Size: 0.3
   <StartCount>k__BackingField: 20
   <FirstAreaCorner>k__BackingField: {x: -11, y: 1.5}
   <LastAreaCorner>k__BackingField: {x: 11, y: 7}
