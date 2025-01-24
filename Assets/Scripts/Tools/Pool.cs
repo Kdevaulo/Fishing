@@ -7,11 +7,13 @@ using Object = UnityEngine.Object;
 
 namespace Kdevaulo.Fishing.Tools
 {
-    internal sealed class Pool<T> where T : MonoBehaviour
+    internal sealed class Pool<T> where T : BaseView
     {
         private readonly List<PoolItem> _activeItems;
         private readonly List<PoolItem> _cachedItems;
         private readonly T _prefab;
+
+        private readonly Dictionary<PoolItem, T> _viewsByPoolItems = new Dictionary<PoolItem, T>();
 
         internal Pool(T prefab, int capacity)
         {
@@ -36,6 +38,11 @@ namespace Kdevaulo.Fishing.Tools
         {
             poolItem.Disable();
             _cachedItems.Add(poolItem);
+        }
+
+        internal T GetView(PoolItem poolItem)
+        {
+            return _viewsByPoolItems[poolItem];
         }
 
         private PoolItem GetFirstCachedItem()
@@ -72,6 +79,9 @@ namespace Kdevaulo.Fishing.Tools
             // todo: here we can change fish visual (create fish prefab provider that provides random fish)
             var view = Object.Instantiate(_prefab);
             var poolItem = view.gameObject.AddComponent<PoolItem>();
+
+            view.Initialize();
+            _viewsByPoolItems.Add(poolItem, view);
             return poolItem;
         }
     }

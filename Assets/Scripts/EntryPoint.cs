@@ -43,7 +43,7 @@ namespace Kdevaulo.Fishing
             _token = gameObject.GetCancellationTokenOnDestroy();
 
             var functionsProvider = new FunctionsProvider(_camera, _playerInput);
-            var pool = new Pool<FishView>(_fishSettings.FishViewVariants[0], _fishSettings.StartCount);
+            var pool = new Pool<FishView>(_fishSettings.FishView, _fishSettings.StartCount);
 
             var crossPositionProvider =
                 new TransformPositionProvider(_crossView.StartPositionHolder, _crossView.EndPositionHolder);

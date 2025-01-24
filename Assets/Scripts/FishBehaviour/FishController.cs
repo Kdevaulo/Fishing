@@ -1,5 +1,9 @@
 ﻿using Kdevaulo.Fishing.Tools;
 
+using UnityEditor;
+
+using UnityEngine;
+
 namespace Kdevaulo.Fishing.FishBehaviour
 {
     internal sealed class FishController : BaseController<FishContainerView>, IInitializable
@@ -24,8 +28,13 @@ namespace Kdevaulo.Fishing.FishBehaviour
             {
                 var poolItem = _fishPool.Get();
                 poolItem.transform.parent = View.transform;
+
                 var targetPosition = _pointGenerator.Get();
-                poolItem.transform.position = targetPosition;
+                poolItem.transform.localPosition = targetPosition;
+
+                var view = _fishPool.GetView(poolItem);
+                view.SetColor(new Color32(255, 162, 56, 176));
+                view.SetSize(0.75f);
             }
         }
     }
